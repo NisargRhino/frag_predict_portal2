@@ -5,10 +5,9 @@ from rdkit.Chem import AllChem, DataStructs, Descriptors
 import Levenshtein
 import pandas as pd
 import requests
-base_path = 'KennardLiong/proteinmodels/protein-models/'
-#from fragpred import predict_fragment_smiles, cleanup_molecule_rdkit, calculate_properties, get_3d_structure
 
-unique_smiles_df = pd.read_csv('unique_smile5.csv')# enter the path of unique_smile5.csv
+# Load unique SMILES from CSV
+unique_smiles_df = pd.read_csv('unique_smile5.csv')  # Enter the path of unique_smile5.csv
 unique_smiles_list = unique_smiles_df['SMILES'].tolist()
 
 # Function to clean up a molecule
@@ -19,6 +18,7 @@ def cleanup_molecule_rdkit(smiles):
     Chem.SanitizeMol(mol)
     return Chem.MolToSmiles(mol)
 
+# Function to calculate properties of a molecule
 def calculate_properties(smiles):
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
@@ -36,6 +36,7 @@ def calculate_properties(smiles):
         'tpsa': tpsa
     }
 
+# Function to get 3D structure of a molecule
 def get_3d_structure(smiles):
     response = requests.post('https://frag-predict-portal-2.onrender.com/get_3d_structure', json={'smiles': smiles})
     if response.status_code == 200:
@@ -44,7 +45,7 @@ def get_3d_structure(smiles):
         print("Error fetching 3D structure:", response.json())
         return None
 
-
+# Function to calculate Tanimoto similarity
 def tanimoto_similarity(smiles1, smiles2):
     mol1 = Chem.MolFromSmiles(smiles1)
     mol2 = Chem.MolFromSmiles(smiles2)
@@ -57,6 +58,7 @@ def tanimoto_similarity(smiles1, smiles2):
     
     return DataStructs.TanimotoSimilarity(fp1, fp2)
 
+# Function to calculate string similarity using Levenshtein distance
 def string_similarity(smiles1, smiles2):
     distance = Levenshtein.distance(smiles1, smiles2)
     max_len = max(len(smiles1), len(smiles2))
@@ -64,10 +66,12 @@ def string_similarity(smiles1, smiles2):
         return 1.0
     return 1 - (distance / max_len)
 
+# Function to check if a SMILES string is valid
 def is_valid_smiles(smiles):
     mol = Chem.MolFromSmiles(smiles)
     return mol is not None
 
+# Function to find the closest valid SMILES string
 def find_closest_valid_smiles(predicted_smiles, unique_smiles_list):
     closest_smiles = None
     highest_similarity = -1
@@ -78,10 +82,13 @@ def find_closest_valid_smiles(predicted_smiles, unique_smiles_list):
             closest_smiles = smiles
     return closest_smiles
 
-
+# Function to predict fragment SMILES
 def predict_fragment_smiles(smiles, protein, max_length=128):
-    model = RobertaForMaskedLM.from_pretrained(f'{base_path}model-{protein}')
-    tokenizer = RobertaTokenizer.from_pretrained(f'{base_path}tokenizer-{protein}')
+    model_path = f'KennardLiong/proteinmodels/protein-models/model-{protein}'
+    tokenizer_path = f'KennardLiong/proteinmodels/protein-models/tokenizer-{protein}'
+    
+    model = RobertaForMaskedLM.from_pretrained(model_path)
+    tokenizer = RobertaTokenizer.from_pretrained(tokenizer_path)
     model.eval()
 
     inputs = tokenizer(smiles, max_length=max_length, padding='max_length', truncation=True, return_tensors="pt")
@@ -90,14 +97,13 @@ def predict_fragment_smiles(smiles, protein, max_length=128):
     logits = outputs.logits
     predicted_ids = torch.argmax(logits, dim=-1)
     predicted_smiles = tokenizer.decode(predicted_ids[0], skip_special_tokens=True)
-    print("intial smiles: ", predicted_smiles)
+    print("initial smiles: ", predicted_smiles)
     if not is_valid_smiles(predicted_smiles):
         print("Predicted SMILES is invalid. Finding the closest valid SMILES...")
         closest_valid_smiles = find_closest_valid_smiles(predicted_smiles, unique_smiles_list)
         predicted_smiles = closest_valid_smiles
         print("new closest predicted smiles: ", predicted_smiles)
     return predicted_smiles
-
 
 # Example usage
 new_drug_smiles = "CC=C(C)C(=O)OC1C(C)=CC23C(=O)C(C=C(COC(C)=O)C(O)C12O)C1C(CC3C)C1(C)C"  # Replace with your input SMILES
