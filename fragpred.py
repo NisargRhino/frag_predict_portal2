@@ -5,7 +5,7 @@ from rdkit.Chem import AllChem, DataStructs, Descriptors
 import Levenshtein
 import pandas as pd
 import requests
-
+base_path = 'KennardLiong/proteinmodels/protein-models/'
 #from fragpred import predict_fragment_smiles, cleanup_molecule_rdkit, calculate_properties, get_3d_structure
 
 unique_smiles_df = pd.read_csv('unique_smile5.csv')# enter the path of unique_smile5.csv
@@ -80,8 +80,8 @@ def find_closest_valid_smiles(predicted_smiles, unique_smiles_list):
 
 
 def predict_fragment_smiles(smiles, protein, max_length=128):
-    model = RobertaForMaskedLM.from_pretrained('KennardLiong/proteinmodels/tree/main/protein-models/model-'+str(protein))  # Update with your model path
-    tokenizer = RobertaTokenizer.from_pretrained('KennardLiong/proteinmodels/tree/main/protein-models/tokenizer-'+str(protein))  # Update with your tokenizer path
+    model = RobertaForMaskedLM.from_pretrained(f'{base_path}model-{protein}')
+    tokenizer = RobertaTokenizer.from_pretrained(f'{base_path}tokenizer-{protein}')
     model.eval()
 
     inputs = tokenizer(smiles, max_length=max_length, padding='max_length', truncation=True, return_tensors="pt")
