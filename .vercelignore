@@ -7,3 +7,6 @@ node_modules
 __pycache__
 *.pyc
 tests
+protein-models/
+!protein-models/model-mTOR/
+!protein-models/tokenizer-mTOR/
