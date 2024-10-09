@@ -97,15 +97,17 @@ def predict_fragment():
     data = request.json
     smiles = data.get('smiles')
     protein = data.get('protein')
-    print("smiles" + smiles)
-    print("protein" + protein)
+    print("smiles----:" + smiles)
+    print("protein----:" + protein)
 
     if not smiles:
         return jsonify({"error": "SMILES string is required"}), 400
 
     fragment_smiles = predict_fragment_smiles(smiles, protein)
+    print("reached here 1 !!!!")
     cleaned_fragment_smiles = cleanup_molecule_rdkit(fragment_smiles)
-    
+    print("reached here 2 !!!!")
+
     if not cleaned_fragment_smiles:
         return jsonify({"error": "Failed to generate a valid fragment"}), 500
     mol = Chem.MolFromSmiles(cleaned_fragment_smiles)
