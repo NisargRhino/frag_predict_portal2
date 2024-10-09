@@ -86,8 +86,8 @@ def find_closest_valid_smiles(predicted_smiles, unique_smiles_list):
 def predict_fragment_smiles(smiles, protein, max_length=128):
     #model_path = f'KennardLiong/proteinmodels/protein-models/model-{protein}'
     #tokenizer_path = f'KennardLiong/proteinmodels/protein-models/tokenizer-{protein}'
-    model_path = f'NisargRhino/protein-models/model-mTOR'
-    tokenizer_path = f'NisargRhino/protein-models/tokenizer-mTOR'
+    model_path = f'NisargRhino/protein-models'
+    tokenizer_path = f'NisargRhino/protein-models'
    
     print("model path ----: " + model_path)
     print("tokenizer path ----: " + tokenizer_path)
