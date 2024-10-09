@@ -111,6 +111,7 @@ def predict_fragment_smiles(smiles, protein, max_length=128):
     return predicted_smiles
 
 # Example usage
+"""
 new_drug_smiles = "CC=C(C)C(=O)OC1C(C)=CC23C(=O)C(C=C(COC(C)=O)C(O)C12O)C1C(CC3C)C1(C)C"  # Replace with your input SMILES
 predicted_fragment_smiles = predict_fragment_smiles(new_drug_smiles, 'mTOR')
 print("Predicted Fragment SMILES:", predicted_fragment_smiles)
@@ -122,3 +123,4 @@ print("Tanimoto Similarity:", similarity)
 # Calculate string similarity
 string_sim = string_similarity(predicted_fragment_smiles, actual_fragment_smiles)
 print("String Similarity:", string_sim)
+"""
