@@ -86,7 +86,9 @@ def find_closest_valid_smiles(predicted_smiles, unique_smiles_list):
 def predict_fragment_smiles(smiles, protein, max_length=128):
     model_path = f'KennardLiong/proteinmodels/protein-models/model-{protein}'
     tokenizer_path = f'KennardLiong/proteinmodels/protein-models/tokenizer-{protein}'
-    
+    print("model path ----: " + model_path)
+    print("tokenizer path ----: " + tokenizer_path)
+
     model = RobertaForMaskedLM.from_pretrained(model_path)
     tokenizer = RobertaTokenizer.from_pretrained(tokenizer_path)
     model.eval()
