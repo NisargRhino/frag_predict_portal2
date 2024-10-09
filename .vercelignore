@@ -7,7 +7,6 @@ node_modules
 __pycache__
 *.pyc
 tests
-protein-models/
 README.md
 combined_structure_0.pdb
 combined_structure_2.pdb
