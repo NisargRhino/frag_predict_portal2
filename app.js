@@ -12,7 +12,7 @@ document.getElementById('inputForm').addEventListener('submit', function(event) 
 
     async function fetch2DStructure(smiles, imgElement) {
         try {
-            const response = await fetch(https://frag-predict-portal-1.onrender.com/get_2d_structure', {
+            const response = await fetch('https://frag-predict-portal-1.onrender.com/get_2d_structure', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
