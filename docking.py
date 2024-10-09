@@ -60,7 +60,7 @@ def run_docking(smiles):
         shutil.rmtree(docking_dir)
 
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     # Define the SMILES string to test
     #smiles = "C1C(C(C(C(C1N)OC2C(C(C(C(O2)CN)O)O)O)O)OC3C(C(C(C(O3)CO)O)N)O)N"  # Example SMILES string for kanamycin
     #score = run_docking(smiles)
