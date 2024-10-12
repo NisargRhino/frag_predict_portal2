@@ -104,13 +104,26 @@
         <div class="row justify-content-center section-spacing">
             <div class="col-md-12">
                 <form id="inputForm">
-                    <div class="form-group">
+                   <div class="form-group">
                         <label for="smilesInput1">SMILES String 1</label>
-                        <input type="text" class="form-control" id="smilesInput1" placeholder="Enter SMILES string" required>
+                        <input class="form-control" id="smilesInput1" list="smilesList1" placeholder="Type or select a SMILES string" />
+                        <datalist id="smilesList1">
+                            <option value="C=CCCC(=O)NCC1CN(c2ccc(N3CCOCC3)c(F)c2)C(=O)O1">
+                            <option value="CC(=O)NCC1CN(c2ccc(-c3cncs3)c(F)c2)C(=O)O1">
+                            <option value="CC(C)(C)NCC(O)COc1ccc(O)c2c1CCC(=O)N2">
+                            <option value="CC(C)C(NC(=O)CCc1ccccc1)C(=O)N1CCCC1">
+                        </datalist>
                     </div>
+                    
                     <div class="form-group">
                         <label for="smilesInput2">SMILES String 2</label>
-                        <input type="text" class="form-control" id="smilesInput2" placeholder="Enter SMILES string" required>
+                        <input class="form-control" id="smilesInput2" list="smilesList2" placeholder="Type or select a SMILES string" />
+                        <datalist id="smilesList2">
+                            <option value="C=CCCC(=O)NCC1CN(c2ccc(N3CCOCC3)c(F)c2)C(=O)O1">
+                            <option value="CC(=O)NCC1CN(c2ccc(-c3cncs3)c(F)c2)C(=O)O1">
+                            <option value="CC(C)(C)NCC(O)COc1ccc(O)c2c1CCC(=O)N2">
+                            <option value="CC(C)C(NC(=O)CCc1ccccc1)C(=O)N1CCCC1">
+                        </datalist>
                     </div>
                     <div class="form-group">
                         <label for="proteinSelector">Select Protein</label>
